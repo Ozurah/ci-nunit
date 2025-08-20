@@ -30,10 +30,17 @@ jobs:
       run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
 
     # Output
-    - name: Tests result 🪄
+    - name: Tests result 🪄📊
       if: ${{ !cancelled() }}
       uses: dorny/test-reporter@v2
       with:
         name: 'Test Results'
         path: 'TestResults/*.trx'
         reporter: dotnet-trx
+        
+    - name: Tests result 🪄📂
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Tests result
+        path: TestResults
