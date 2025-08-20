@@ -23,6 +23,15 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release
+
+    # Test
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory artifacts
+
+    # Output
+    - name: Tests result 🪄
+      uses: actions/upload-artifact@v4
+      with:
+        name: Tests result
+        path: artifacts
