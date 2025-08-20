@@ -27,12 +27,13 @@ jobs:
 
     # Test
     - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory artifacts
+      run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
 
     # Output
     - name: Tests result 🪄
-      if: always()
-      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      uses: dorny/test-reporter@v2
       with:
-        name: Tests result
-        path: artifacts
+        name: 'Test Results'
+        path: 'TestResults/*.trx'
+        reporter: dotnet-trx
