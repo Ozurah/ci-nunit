@@ -38,7 +38,7 @@ jobs:
 
     # Test
     - name: Run tests 🧫
-      run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ${{ env.FOLDER_NAME }}
+      run: dotnet test --no-build --verbosity normal --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ${{ env.TEST_FOLDER_NAME }}
 
     # Output
     - name: Tests result 🪄📊
@@ -46,7 +46,7 @@ jobs:
       uses: dorny/test-reporter@v2
       with:
         name: 'Test Results'
-        path: '${{ env.FOLDER_NAME }}/*.trx'
+        path: '${{ env.TEST_FOLDER_NAME }}/*.trx'
         reporter: dotnet-trx
         
     - name: Tests result 🪄📂
@@ -54,4 +54,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Tests result
-        path: ${{ env.FOLDER_NAME }}
+        path: ${{ env.TEST_FOLDER_NAME }}
